@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10 Minute Updates — v5.1</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Segoe UI,sans-serif;background:#f4f7fb;color:#172033}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px;background:#eef3f9}
+.login-card{width:min(420px,100%);background:#fff;border:1px solid #e3e8ef;border-radius:20px;padding:32px;box-shadow:0 16px 45px #00000012}
+.logo{width:48px;height:48px;border-radius:14px;background:#1d4ed8;color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:16px}
+h1{font-size:24px;margin:0}.muted{color:#667085;font-size:13px;line-height:1.5}
+label{display:block;font-size:12px;font-weight:700;margin:16px 0 7px;color:#344054}
+input,textarea,select{width:100%;padding:11px 12px;border:1px solid #d7dce5;border-radius:9px;background:#fff;outline:none}
+textarea{min-height:110px;resize:vertical}
+.btn{border:0;border-radius:9px;padding:11px 15px;font-weight:700}.primary{background:#1d4ed8;color:#fff}.soft{background:#eaf1ff;color:#1d4ed8}
+.error{margin-top:12px;padding:10px;border-radius:8px;background:#fff0f0;color:#b42318;font-size:12px}
+.app{display:none;min-height:100vh}.top{height:70px;background:#fff;border-bottom:1px solid #e5e9f0;display:flex;justify-content:space-between;align-items:center;padding:0 24px}
+.brand{display:flex;align-items:center;gap:10px}.brand-logo{width:38px;height:38px;border-radius:10px;background:#1d4ed8;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800}
+.brand strong{display:block;font-size:15px}.brand span{font-size:11px;color:#667085}
+.user{display:flex;align-items:center;gap:10px}.avatar{width:36px;height:36px;border-radius:50%;background:#eaf1ff;color:#1d4ed8;display:grid;place-items:center;font-size:11px;font-weight:800}
+.shell{display:flex;max-width:1600px;margin:auto}.side{width:220px;background:#fff;border-right:1px solid #e5e9f0;min-height:calc(100vh - 70px);padding:16px 12px}
+.nav{width:100%;border:0;background:none;text-align:left;padding:11px;border-radius:8px;color:#475467;font-weight:700;margin-bottom:4px}.nav.active{background:#eaf1ff;color:#1d4ed8}
+main{flex:1;padding:24px;min-width:0}.head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}.head h2{margin:0;font-size:23px}.head p{margin:5px 0 0;color:#667085;font-size:12px}
+.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(6,1fr)}.two{grid-template-columns:1.3fr .7fr}.three{grid-template-columns:repeat(3,1fr)}
+.card{background:#fff;border:1px solid #e5e9f0;border-radius:13px;box-shadow:0 7px 22px #1018280b}.kpi{padding:16px}.kpi .lab{font-size:10px;color:#667085;font-weight:700}.kpi .num{font-size:26px;font-weight:800;margin-top:4px}
+.section{padding:17px}.section h3{font-size:15px;margin:0 0 12px}.brief{font-size:13px;line-height:1.6;color:#344054}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:850px}.table th,.table td{padding:10px 8px;border-bottom:1px solid #edf0f4;text-align:left;font-size:11px;vertical-align:top}.table th{font-size:10px;color:#667085;text-transform:uppercase}
+.pill{display:inline-block;padding:4px 8px;border-radius:99px;font-size:10px;font-weight:800}.green{background:#dcfce7;color:#166534}.yellow{background:#fef3c7;color:#92400e}.red{background:#fee2e2;color:#991b1b}.gray{background:#eef2f6;color:#667085}.blue{background:#dbeafe;color:#1e40af}
+.form-grid{grid-template-columns:1.3fr .7fr}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.box{padding:14px;border-radius:9px;background:#f8fafc;border:1px solid #e5e9f0;margin-bottom:10px;font-size:12px;line-height:1.5}
+.att{padding:10px;border-left:4px solid #d97706;background:#fffbeb;border-radius:7px;margin-bottom:8px;font-size:11px}.att.redline{border-left-color:#dc2626;background:#fff5f5}
+@media(max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.two,.form-grid{grid-template-columns:1fr}.three{grid-template-columns:1fr}}
+@media(max-width:700px){.side{display:none}main{padding:15px}.top{padding:0 14px}.user>div:not(.avatar){display:none}.kpis{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+ <div class="login-card">
+  <div class="logo">10M</div>
+  <h1>10 Minute Updates</h1>
+  <p class="muted">Operations Control Tower<br>Daily update deadline: <b>4:00 PM</b></p>
+  <label>Username</label>
+  <input id="username" placeholder="e.g. inbound.im3" autocomplete="username">
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Enter password" autocomplete="current-password">
+  <button class="btn primary" style="width:100%;margin-top:18px" onclick="doLogin()">Sign In</button>
+  <div id="error" class="error hidden"></div>
+  <p class="muted" style="font-size:10px;margin-top:16px">Prototype credentials are embedded for testing only. Production will use a secure backend.</p>
+ </div>
+</div>
+
+<div id="app" class="app">
+<header class="top">
+ <div class="brand"><div class="brand-logo">10M</div><div><strong>10 Minute Updates</strong><span>Operations Control Tower</span></div></div>
+ <div class="user"><div><b id="userName"></b><br><span id="userRole" class="muted"></span></div><div class="avatar" id="avatar"></div><button class="btn soft" onclick="logout()">Logout</button></div>
+</header>
+<div class="shell">
+<aside class="side">
+ <button class="nav active" onclick="page('tower',this)">▦ Control Tower</button>
+ <button class="nav" onclick="page('mine',this)">✎ My Update</button>
+ <button class="nav" onclick="page('weekly',this)">◷ Weekly</button>
+ <button class="nav" onclick="page('monthly',this)">◷ Monthly</button>
+</aside>
+<main>
+
+<section id="tower">
+ <div class="head"><div><h2>Daily Control Tower</h2><p id="towerSub"></p></div><input id="towerDate" type="date" onchange="renderTower()" style="width:150px"></div>
+ <div class="grid kpis">
+  <div class="card kpi"><div class="lab">MANAGERS</div><div class="num" id="km">11</div></div>
+  <div class="card kpi"><div class="lab">SUBMITTED</div><div class="num" id="ks">0</div></div>
+  <div class="card kpi"><div class="lab">PENDING</div><div class="num" id="kp">11</div></div>
+  <div class="card kpi"><div class="lab">COMPLETION</div><div class="num" id="kc">0%</div></div>
+  <div class="card kpi"><div class="lab">ATTENTION</div><div class="num" id="ka">0</div></div>
+  <div class="card kpi"><div class="lab">ESCALATION</div><div class="num" id="ke">0</div></div>
+ </div>
+ <div class="grid two" style="margin-top:14px">
+  <div class="card section"><h3>Executive Brief</h3><div id="brief" class="brief"></div></div>
+  <div class="card section"><h3>Management Attention</h3><div id="attention"></div></div>
+ </div>
+ <div class="card section" style="margin-top:14px">
+  <h3>All Manager Updates</h3>
+  <div class="table-wrap"><table class="table"><thead><tr><th>Manager</th><th>Today's Work</th><th>Issue / Blocker</th><th>Tomorrow</th><th>Priority</th><th>Status</th><th>Time</th></tr></thead><tbody id="managerRows"></tbody></table></div>
+ </div>
+</section>
+
+<section id="mine" class="hidden">
+ <div class="head"><div><h2>My Update</h2><p>Only your own update is editable.</p></div><span id="saveMsg" class="muted"></span></div>
+ <div class="grid form-grid">
+  <div class="card section">
+   <div class="box"><b id="mineName"></b><br><span id="mineRole"></span><br>Date: <b id="mineDate"></b> · Deadline: <b>4:00 PM</b></div>
+   <label>Today's Work *</label><textarea id="todayWork" placeholder="What did you accomplish today?"></textarea>
+   <label>Key Issue / Blocker</label><textarea id="issue" placeholder="What issue, risk or blocker needs visibility?"></textarea>
+   <label>Tomorrow's Agenda *</label><textarea id="tomorrow" placeholder="What are the key priorities for tomorrow?"></textarea>
+   <div class="row">
+    <div><label>Priority</label><select id="priority"><option>Normal</option><option>Attention</option><option>Escalation</option></select></div>
+    <div><label>Support Needed</label><select id="support"><option>No support</option><option>Head of Ops</option><option>Cross Function</option><option>Client</option></select></div>
+   </div>
+   <button class="btn primary" style="width:100%;margin-top:17px" onclick="submitUpdate()">Submit / Update</button>
+  </div>
+  <div class="card section"><h3>Submission Status</h3><div id="myStatus" class="box"></div><div class="box"><b>Visibility</b><br>Your submitted update is visible in the shared Control Tower.</div></div>
+ </div>
+</section>
+
+<section id="weekly" class="hidden">
+ <div class="head"><div><h2>Weekly Summary</h2><p>Monday–Friday manager compliance.</p></div><input id="weekDate" type="date" onchange="renderWeekly()" style="width:150px"></div>
+ <div id="weeklyContent"></div>
+</section>
+
+<section id="monthly" class="hidden">
+ <div class="head"><div><h2>Monthly Summary</h2><p>Manager compliance and priority flags.</p></div><input id="monthDate" type="month" onchange="renderMonthly()" style="width:150px"></div>
+ <div id="monthlyContent"></div>
+</section>
+
+</main></div></div>
+
+<script>
+const USERS=[
+["inbound.im3","IM3@10Minute","Inbound Manager — IM3","Inbound","IM"],
+["inbound.3id","3ID@10Minute","Inbound Manager — 3ID","Inbound","3I"],
+["digital.im3","IM3@Digital10","Digital Manager — IM3","Digital","DI"],
+["digital.3id","3ID@Digital10","Digital Manager — 3ID","Digital","D3"],
+["qa.manager","QA@10Minute","Quality Assurance Manager","Quality Assurance","QA"],
+["training.manager","Train@10Minute","Training Manager","Training","TR"],
+["service.operation","Service@10Minute","Service Operation Manager","Service Operation","SO"],
+["cr.im3","CRIM3@10Minute","CR Manager — IM3","Customer Relations","CI"],
+["cr.3id","CR3ID@10Minute","CR Manager — 3ID","Customer Relations","C3"],
+["reporting.manager","Report@10Minute","Reporting Manager","Reporting","RP"],
+["support.manager","Support@10Minute","Support / Other Manager","Support","SU"],["admin.feri","Feri@10Minute","Feri Susanto — Head of Ops / Administrator","Administrator","FS"]
+];
+const MANAGERS=USERS.map(x=>({u:x[0],p:x[1],name:x[2],role:x[3],initial:x[4]}));
+let me=null;
+const iso=()=>{let d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const key=(d,u)=>"10MU_V51_"+d+"_"+u;
+const get=(d,u)=>{try{return JSON.parse(localStorage.getItem(key(d,u))||"null")}catch(e){return null}};
+const put=(d,u,x)=>localStorage.setItem(key(d,u),JSON.stringify(x));
+const fmt=d=>new Date(d+"T00:00:00").toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function doLogin(){
+ const u=document.getElementById("username").value.trim().toLowerCase(),p=document.getElementById("password").value.trim();
+ const x=MANAGERS.find(a=>a.u===u&&a.p===p),err=document.getElementById("error");
+ if(!x){err.textContent="Username or password is incorrect.";err.classList.remove("hidden");return}
+ me=x;sessionStorage.setItem("10MU_USER",x.u);err.classList.add("hidden");document.getElementById("password").value="";openApp();
+}
+function openApp(){
+ document.getElementById("login").style.display="none";document.getElementById("app").style.display="block";
+ document.getElementById("userName").textContent=me.name;document.getElementById("userRole").textContent=me.role;document.getElementById("avatar").textContent=me.initial;
+ document.getElementById("mineName").textContent=me.name;document.getElementById("mineRole").textContent=me.role;
+ document.getElementById("towerDate").value=iso();document.getElementById("weekDate").value=iso();document.getElementById("monthDate").value=iso().slice(0,7);
+ loadMine();renderTower();
+}
+function logout(){
+  sessionStorage.removeItem("10MU_USER");
+  me=null;
+  document.getElementById("app").style.display="none";
+  document.getElementById("login").style.display="grid";
+  document.getElementById("username").value="";
+  document.getElementById("password").value="";
+  document.getElementById("error").classList.add("hidden");
+  document.getElementById("username").focus();
+}
+function page(n,b){
+ document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+ ["tower","mine","weekly","monthly"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==n));
+ if(n==="tower")renderTower();if(n==="mine")loadMine();if(n==="weekly")renderWeekly();if(n==="monthly")renderMonthly();
+}
+function status(x,d){
+ if(!x||!x.submitted)return ["Pending","gray"];
+ return [new Date(x.submittedAt)<=new Date(d+"T16:00:00")?"On Time":"Late",new Date(x.submittedAt)<=new Date(d+"T16:00:00")?"green":"red"];
+}
+function pill(p){return '<span class="pill '+(p==="Escalation"?"red":p==="Attention"?"yellow":"blue")+'">'+esc(p)+'</span>'}
+function loadMine(){
+ const d=iso(),x=get(d,me.u)||{};document.getElementById("mineDate").textContent=fmt(d);
+ document.getElementById("todayWork").value=x.todayWork||"";document.getElementById("issue").value=x.issue||"";document.getElementById("tomorrow").value=x.tomorrow||"";
+ document.getElementById("priority").value=x.priority||"Normal";document.getElementById("support").value=x.support||"No support";renderMyStatus();
+}
+function submitUpdate(){
+ const d=iso(),old=get(d,me.u)||{},w=document.getElementById("todayWork").value.trim(),t=document.getElementById("tomorrow").value.trim();
+ if(!w||!t){alert("Please complete Today's Work and Tomorrow's Agenda.");return}
+ const x={date:d,user:me.u,name:me.name,role:me.role,todayWork:w,issue:document.getElementById("issue").value.trim(),tomorrow:t,priority:document.getElementById("priority").value,support:document.getElementById("support").value,submitted:true,submittedAt:old.submittedAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
+ put(d,me.u,x);document.getElementById("saveMsg").textContent="✓ Saved "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});renderMyStatus();renderTower();
+}
+function renderMyStatus(){
+ const x=get(iso(),me.u),box=document.getElementById("myStatus");
+ if(!x){box.innerHTML="<b>Pending</b><br>No update submitted yet today.";return}
+ const s=status(x,iso());box.innerHTML="<b>"+s[0]+"</b> · "+pill(x.priority)+"<br>Submitted: "+new Date(x.submittedAt).toLocaleString("en-GB")+"<br>Support: "+esc(x.support);
+}
+function renderTower(){
+ const d=document.getElementById("towerDate").value||iso(),xs=MANAGERS.map(m=>get(d,m.u)),sub=xs.filter(x=>x?.submitted),att=sub.filter(x=>x.priority==="Attention"),escs=sub.filter(x=>x.priority==="Escalation");
+ document.getElementById("towerSub").textContent="Daily manager updates for "+fmt(d);
+ document.getElementById("km").textContent=11;document.getElementById("ks").textContent=sub.length;document.getElementById("kp").textContent=11-sub.length;document.getElementById("kc").textContent=Math.round(sub.length/11*100)+"%";document.getElementById("ka").textContent=att.length;document.getElementById("ke").textContent=escs.length;
+ document.getElementById("brief").innerHTML="<b>"+sub.length+"/11</b> managers submitted today's update. "+(att.length+escs.length?("<b>"+(att.length+escs.length)+"</b> priority item(s) require management attention."):"No priority alerts have been raised.")+"<br>Control Tower is shared; each manager's editable area remains personal.";
+ const alerts=[...escs,...att];document.getElementById("attention").innerHTML=alerts.length?alerts.map(x=>'<div class="att '+(x.priority==="Escalation"?"redline":"")+'"><b>'+esc(x.name)+'</b> '+pill(x.priority)+'<br>'+esc(x.issue||"Priority flagged without blocker detail.")+'</div>').join(""):"<div class='muted'>No management attention items.</div>";
+ document.getElementById("managerRows").innerHTML=MANAGERS.map(m=>{const x=get(d,m.u),s=status(x,d);return "<tr><td><b>"+esc(m.name)+"</b><br><span class='muted'>"+esc(m.role)+"</span></td><td>"+(x?esc(x.todayWork):"—")+"</td><td>"+(x?esc(x.issue||"—"):"—")+"</td><td>"+(x?esc(x.tomorrow):"—")+"</td><td>"+(x?pill(x.priority):"—")+"</td><td><span class='pill "+s[1]+"'>"+s[0]+"</span></td><td>"+(x?new Date(x.submittedAt).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}):"—")+"</td></tr>"}).join("");
+}
+function weekDates(a){
+ let d=new Date(a+"T00:00:00"),day=d.getDay(),diff=day===0?-6:1-day;d.setDate(d.getDate()+diff);
+ return Array.from({length:5},(_,i)=>{let z=new Date(d);z.setDate(d.getDate()+i);return z.toISOString().slice(0,10)});
+}
+function renderWeekly(){
+ const ds=weekDates(document.getElementById("weekDate").value||iso());let total=0;
+ MANAGERS.forEach(m=>ds.forEach(d=>{if(get(d,m.u)?.submitted)total++}));
+ let h='<div class="grid three"><div class="card kpi"><div class="lab">SUBMISSIONS</div><div class="num">'+total+'</div></div><div class="card kpi"><div class="lab">COMPLIANCE</div><div class="num">'+Math.round(total/55*100)+'%</div></div><div class="card kpi"><div class="lab">PERIOD</div><div class="num" style="font-size:16px">'+fmt(ds[0])+'</div></div></div>';
+ h+='<div class="card section" style="margin-top:14px"><h3>Manager Weekly Compliance</h3><div class="table-wrap"><table class="table"><thead><tr><th>Manager</th>'+ds.map(d=>"<th>"+new Date(d+"T00:00:00").toLocaleDateString("en-GB",{weekday:"short"})+"</th>").join("")+'<th>Total</th></tr></thead><tbody>';
+ MANAGERS.forEach(m=>{let n=0;h+="<tr><td><b>"+esc(m.name)+"</b></td>"+ds.map(d=>{let x=get(d,m.u);if(x?.submitted)n++;let s=status(x,d);return "<td><span class='pill "+s[1]+"'>"+s[0]+"</span></td>"}).join("")+"<td><b>"+n+"/5</b></td></tr>"});h+="</tbody></table></div></div>";document.getElementById("weeklyContent").innerHTML=h;
+}
+function renderMonthly(){
+ const ym=document.getElementById("monthDate").value||iso().slice(0,7),parts=ym.split("-"),days=new Date(+parts[0],+parts[1],0).getDate();let total=0,att=0,escs=0;
+ MANAGERS.forEach(m=>{for(let i=1;i<=days;i++){let d=ym+"-"+String(i).padStart(2,"0"),x=get(d,m.u);if(x?.submitted){total++;if(x.priority==="Attention")att++;if(x.priority==="Escalation")escs++}}});
+ let h='<div class="grid three"><div class="card kpi"><div class="lab">SUBMISSIONS</div><div class="num">'+total+'</div></div><div class="card kpi"><div class="lab">PRIORITY FLAGS</div><div class="num">'+(att+escs)+'</div></div><div class="card kpi"><div class="lab">PERIOD</div><div class="num">'+ym+'</div></div></div>';
+ h+='<div class="card section" style="margin-top:14px"><h3>Manager Monthly Performance</h3><div class="table-wrap"><table class="table"><thead><tr><th>Manager</th><th>Submitted</th><th>Expected</th><th>Compliance</th><th>Attention</th><th>Escalation</th></tr></thead><tbody>';
+ MANAGERS.forEach(m=>{let n=0,a=0,e=0;for(let i=1;i<=days;i++){let x=get(ym+"-"+String(i).padStart(2,"0"),m.u);if(x?.submitted){n++;if(x.priority==="Attention")a++;if(x.priority==="Escalation")e++}}h+="<tr><td><b>"+esc(m.name)+"</b></td><td>"+n+"</td><td>"+days+"</td><td><b>"+Math.round(n/days*100)+"%</b></td><td>"+a+"</td><td>"+e+"</td></tr>"});h+="</tbody></table></div></div>";document.getElementById("monthlyContent").innerHTML=h;
+}
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&document.activeElement.id==="password")doLogin()});
+window.addEventListener("load",()=>{document.getElementById("username").focus()});
+</script>
+</body>
+</html>
